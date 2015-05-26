@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "FLAnimatedImage.h"
 
 // Notifications
 #define MWPHOTO_LOADING_DID_END_NOTIFICATION @"MWPHOTO_LOADING_DID_END_NOTIFICATION"
@@ -31,6 +32,7 @@
 // in -loadUnderlyingImageAndNotify: which may be called by the photo browser if this
 // methods returns nil.
 @property (nonatomic, strong) UIImage *underlyingImage;
+@property (nonatomic, strong) FLAnimatedImage *underlyingAnimatedImage;
 
 // Called when the browser has determined the underlying images is not
 // already loaded into memory but needs it.

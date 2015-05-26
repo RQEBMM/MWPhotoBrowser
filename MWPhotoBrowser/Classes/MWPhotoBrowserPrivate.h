@@ -122,6 +122,7 @@
 - (id<MWPhoto>)photoAtIndex:(NSUInteger)index;
 - (id<MWPhoto>)thumbPhotoAtIndex:(NSUInteger)index;
 - (UIImage *)imageForPhoto:(id<MWPhoto>)photo;
+- (FLAnimatedImage *)animatedImageForPhoto:(id<MWPhoto>)photo;
 - (BOOL)photoIsSelectedAtIndex:(NSUInteger)index;
 - (void)setPhotoSelected:(BOOL)selected atIndex:(NSUInteger)index;
 - (void)loadAdjacentPhotosIfNecessary:(id<MWPhoto>)photo;

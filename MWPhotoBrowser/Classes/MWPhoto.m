@@ -27,11 +27,16 @@
 @implementation MWPhoto
 
 @synthesize underlyingImage = _underlyingImage; // synth property from protocol
+@synthesize underlyingAnimatedImage = _underlyingAnimatedImage;
 
 #pragma mark - Class Methods
 
 + (MWPhoto *)photoWithImage:(UIImage *)image {
 	return [[MWPhoto alloc] initWithImage:image];
+}
+
++ (MWPhoto *)photoWithAnimatedImage:(FLAnimatedImage *)image {
+    return [[MWPhoto alloc] initWithAnimatedImage:image];
 }
 
 // Deprecated
@@ -50,6 +55,13 @@
 		_image = image;
 	}
 	return self;
+}
+
+- (id)initWithAnimatedImage:(FLAnimatedImage *)image {
+    if ((self = [super init])) {
+        _underlyingAnimatedImage = image;
+    }
+    return self;
 }
 
 // Deprecated
@@ -71,6 +83,17 @@
 
 - (UIImage *)underlyingImage {
     return _underlyingImage;
+}
+
+- (FLAnimatedImage *)animatedImage {
+    return _underlyingAnimatedImage;
+}
+
+- (void)setAnimatedImage:(FLAnimatedImage *)newAnimatedImage {
+    if (_underlyingAnimatedImage != newAnimatedImage)
+    {
+        _underlyingAnimatedImage = newAnimatedImage;
+    }
 }
 
 - (void)loadUnderlyingImageAndNotify {

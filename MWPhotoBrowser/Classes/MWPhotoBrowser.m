@@ -730,6 +730,13 @@
 	return nil;
 }
 
+- (FLAnimatedImage *)animatedImageForPhoto:(id<MWPhoto>)photo {
+    if (photo) {
+        return [photo underlyingAnimatedImage];
+    }
+    return nil;
+}
+
 - (void)loadAdjacentPhotosIfNecessary:(id<MWPhoto>)photo {
     MWZoomingScrollView *page = [self pageDisplayingPhoto:photo];
     if (page) {
@@ -1459,7 +1466,7 @@
         
         // Only react when image has loaded
         id <MWPhoto> photo = [self photoAtIndex:_currentPageIndex];
-        if ([self numberOfPhotos] > 0 && [photo underlyingImage]) {
+        if ([self numberOfPhotos] > 0 && ([photo underlyingImage] || [photo underlyingAnimatedImage])) {
             
             // If they have defined a delegate method then just message them
             if ([self.delegate respondsToSelector:@selector(photoBrowser:actionButtonPressedForPhotoAtIndex:)]) {

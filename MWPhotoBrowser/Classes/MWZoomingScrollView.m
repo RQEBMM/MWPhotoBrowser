@@ -105,15 +105,55 @@
     }
     _photo = photo;
     UIImage *img = [_photoBrowser imageForPhoto:_photo];
-    if (img) {
+    FLAnimatedImage *animatedImg = [_photoBrowser animatedImageForPhoto:_photo];
+    if (animatedImg) {
+        [self displayAnimatedImage];
+    } else if (img) {
         [self displayImage];
-    } else {
+    }else {
         // Will be loading so show loading
         [self showLoadingIndicator];
     }
 }
 
 // Get and display image
+- (void)displayAnimatedImage {
+    
+    // Reset
+    self.maximumZoomScale = 1;
+    self.minimumZoomScale = 1;
+    self.zoomScale = 1;
+    self.contentSize = CGSizeMake(0, 0);
+    
+    // Get image from browser as it handles ordering of fetching
+    FLAnimatedImage *animatedImg = [_photoBrowser animatedImageForPhoto:_photo];
+    if (animatedImg) {
+        
+        // Hide indicator
+        [self hideLoadingIndicator];
+        
+        // Set image
+        _photoImageView.animatedImage = animatedImg;
+        _photoImageView.hidden = NO;
+        
+        // Setup photo frame
+        CGRect photoImageViewFrame;
+        photoImageViewFrame.origin = CGPointZero;
+        photoImageViewFrame.size = animatedImg.size;
+        _photoImageView.frame = photoImageViewFrame;
+        self.contentSize = photoImageViewFrame.size;
+        
+        // Set zoom to minimum zoom
+        [self setMaxMinZoomScalesForCurrentBounds];
+    }else {
+        
+        // Failed no image
+        [self displayImageFailure];
+        
+    }
+    [self setNeedsLayout];
+}
+
 - (void)displayImage {
 	if (_photo && _photoImageView.image == nil) {
 		
